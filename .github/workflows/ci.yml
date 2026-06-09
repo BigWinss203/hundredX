@@ -1,0 +1,43 @@
+name: CI Workflow
+
+on:
+  # Run this workflow on every push and pull request to the "main" branch.
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    # Runs on the latest Ubuntu
+    runs-on: ubuntu-latest
+
+    # Steps to execute the workflow
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (if using Node.js)
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Lint the code
+      - name: Run Linting
+        run: npm run lint
+
+      # Step 5: Build the project
+      - name: Build the Code
+        run: npm run build
+
+      # Step 6: Run Tests
+      - name: Run Tests
+        run: npm test
